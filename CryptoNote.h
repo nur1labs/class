@@ -20,6 +20,7 @@ struct MultisignatureInput {
   uint64_t amount;
   uint8_t signatureCount;
   uint32_t outputIndex;
+  uint32_t term;
 };
 
 struct KeyOutput {
@@ -29,6 +30,7 @@ struct KeyOutput {
 struct MultisignatureOutput {
   std::vector<Crypto::PublicKey> keys;
   uint8_t requiredSignatureCount;
+  uint32_t term;
 };
 
 typedef boost::variant<BaseInput, KeyInput, MultisignatureInput> TransactionInput;
@@ -52,16 +54,6 @@ struct Transaction : public TransactionPrefix {
   std::vector<std::vector<Crypto::Signature>> signatures;
 };
 
-struct ParentBlock {
-  uint8_t majorVersion;
-  uint8_t minorVersion;
-  Crypto::Hash previousBlockHash;
-  uint16_t transactionCount;
-  std::vector<Crypto::Hash> baseTransactionBranch;
-  Transaction baseTransaction;
-  std::vector<Crypto::Hash> blockchainBranch;
-};
-
 struct BlockHeader {
   uint8_t majorVersion;
   uint8_t minorVersion;
@@ -71,7 +63,6 @@ struct BlockHeader {
 };
 
 struct Block : public BlockHeader {
-  ParentBlock parentBlock;
   Transaction baseTransaction;
   std::vector<Crypto::Hash> transactionHashes;
 };
