@@ -55,6 +55,9 @@ struct Transaction : public TransactionPrefix {
   std::vector<std::vector<Crypto::Signature>> signatures;
 };
 
+struct BaseTransaction : public TransactionPrefix {
+};
+
 struct ParentBlock {
   uint8_t majorVersion;
   uint8_t minorVersion;
